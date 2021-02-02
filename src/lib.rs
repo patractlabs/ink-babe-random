@@ -7,6 +7,8 @@ pub enum CustomEnvironment {}
 #[derive(Debug, PartialEq, scale::Decode)]
 pub struct Randomness {
     pub epoch: u64,
+    pub start_slot: u64,
+    pub duration: u64,
     pub randomness: <ink_env::DefaultEnvironment as Environment>::Hash,
 }
 
@@ -38,7 +40,7 @@ impl Environment for CustomEnvironment {
     type Balance = <ink_env::DefaultEnvironment as Environment>::Balance;
     type Hash = <ink_env::DefaultEnvironment as Environment>::Hash;
     type Timestamp = <ink_env::DefaultEnvironment as Environment>::Timestamp;
-    type BlockNumber = u32;
+    type BlockNumber = <ink_env::DefaultEnvironment as Environment>::BlockNumber;
 
     type ChainExtension = BabeRandomnessExt;
 }
