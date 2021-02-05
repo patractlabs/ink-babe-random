@@ -4,12 +4,13 @@ use ink_env::Environment;
 use ink_lang as ink;
 pub enum CustomEnvironment {}
 
-#[derive(Debug, PartialEq, scale::Decode)]
+#[derive(Debug, PartialEq, scale::Encode, scale::Decode)]
+#[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
 pub struct Randomness {
     pub epoch: u64,
     pub start_slot: u64,
     pub duration: u64,
-    pub randomness: <ink_env::DefaultEnvironment as Environment>::Hash,
+    pub randomness:<ink_env::DefaultEnvironment as Environment>::Hash,
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, scale::Encode, scale::Decode)]
@@ -30,7 +31,16 @@ pub trait BabeRandomnessExt {
 
     /// Reads from runtime storage.
     #[ink(extension = 0x00010000, returns_result = false)]
-    fn random(subject: &[u8]) -> Randomness;
+    fn current_epoch() -> Randomness;
+
+    #[ink(extension = 0x00010001, returns_result = false)]
+    fn next_epoch() -> Randomness;
+
+    #[ink(extension = 0x00010002, returns_result = false)]
+    fn randomness_of(epoch: u64) -> <ink_env::DefaultEnvironment as Environment>::Hash;
+
+    #[ink(extension = 0x00010003, returns_result = false)]
+    fn random(subject: &[u8]) -> <ink_env::DefaultEnvironment as Environment>::Hash;
 }
 
 impl Environment for CustomEnvironment {
