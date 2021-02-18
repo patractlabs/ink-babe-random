@@ -28,7 +28,7 @@ mod example {
         }
 
         #[ink(message)]
-        pub fn randomness_of(&self, epoch: u64) -> [u8; 32] {
+        pub fn randomness_of(&self, epoch: u64) -> Hash {
             self.env().extension().randomness_of(epoch)
         }
 

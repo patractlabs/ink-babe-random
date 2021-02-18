@@ -38,10 +38,10 @@ pub trait BabeRandomnessExt {
     fn next_epoch() -> BabeRandomness;
 
     #[ink(extension = 0x00010002, handle_status = false, returns_result = false)]
-    fn randomness_of(epoch: u64) -> [u8; 32];
+    fn randomness_of(epoch: u64) -> <DefaultEnvironment as Environment>::Hash;
 
     #[ink(extension = 0x00010003, handle_status = false, returns_result = false)]
-    fn random(subject: &[u8]) -> <ink_env::DefaultEnvironment as Environment>::Hash;
+    fn random(subject: &[u8]) -> <DefaultEnvironment as Environment>::Hash;
 }
 
 impl Environment for CustomEnvironment {
