@@ -1,11 +1,11 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use ink_babe_random::{CustomEnvironment, Randomness};
+use ink_babe_random::{BabeRandomness, CustomEnvironment};
 use ink_lang as ink;
 
 #[ink::contract(env = crate::CustomEnvironment)]
 mod example {
-    use crate::Randomness;
+    use crate::BabeRandomness;
     use ink_prelude::vec::Vec;
 
     #[ink(storage)]
@@ -18,23 +18,23 @@ mod example {
         }
 
         #[ink(message)]
-        pub fn current_epoch(&self) -> Randomness {
-            self.env().extension().current_epoch().unwrap()
+        pub fn current_epoch(&self) -> BabeRandomness {
+            self.env().extension().current_epoch()
         }
 
         #[ink(message)]
-        pub fn next_epoch(&self) -> Randomness {
-            self.env().extension().next_epoch().unwrap()
+        pub fn next_epoch(&self) -> BabeRandomness {
+            self.env().extension().next_epoch()
         }
 
         #[ink(message)]
-        pub fn randomness_of(&self, epoch: u64) -> Hash {
-            self.env().extension().randomness_of(epoch).unwrap()
+        pub fn randomness_of(&self, epoch: u64) -> [u8; 32] {
+            self.env().extension().randomness_of(epoch)
         }
 
         #[ink(message)]
         pub fn random(&self, subject: Vec<u8>) -> Hash {
-            self.env().extension().random(subject.as_slice()).unwrap()
+            self.env().extension().random(subject.as_slice())
         }
     }
 }
