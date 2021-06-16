@@ -52,6 +52,7 @@ impl Environment for CustomEnvironment {
     type Hash = <DefaultEnvironment as Environment>::Hash;
     type Timestamp = <DefaultEnvironment as Environment>::Timestamp;
     type BlockNumber = <DefaultEnvironment as Environment>::BlockNumber;
+    type RentFraction = <DefaultEnvironment as Environment>::RentFraction;
 
     type ChainExtension = BabeRandomnessExt;
 }
